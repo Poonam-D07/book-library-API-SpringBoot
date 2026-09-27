@@ -5,6 +5,7 @@ import com.poonam.booklibrary.DTO.BookResDTO;
 import com.poonam.booklibrary.Entity.BookEntity;
 import com.poonam.booklibrary.Service.BookService;
 import com.poonam.booklibrary.Service.BookServiceImpl;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,7 @@ private final BookService bookService;
     //Add books
     //=========================
     @PostMapping("/add")
-    public ResponseEntity<?> addBook(@RequestBody BookReqDTO bookReqDTO){
+    public ResponseEntity<?> addBook(@Valid @RequestBody BookReqDTO bookReqDTO){
         BookResDTO addedBook = bookService.addBook(bookReqDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(addedBook);
     }
@@ -73,7 +74,7 @@ private final BookService bookService;
     //=========================
 
     @PutMapping("/update/{bookId}")
-    public ResponseEntity<?>updateBook(@PathVariable Long bookId, @RequestBody BookReqDTO bookReqDTO){
+    public ResponseEntity<?>updateBook(@PathVariable Long bookId, @Valid @RequestBody BookReqDTO bookReqDTO){
         BookResDTO bookResDTO = bookService.updateBook(bookId, bookReqDTO);
 
         if(bookResDTO == null){
@@ -109,5 +110,12 @@ private final BookService bookService;
         return ResponseEntity.ok("Book soft deleted successfully with id "+ bookId);
     }
 
-
+    //=========================
+    //Search book by author
+    //=========================
+    @GetMapping("/search")
+    public ResponseEntity<List<BookResDTO>> searchByAuthro(@RequestParam String author){
+      List<BookResDTO> searchResult = bookService.searchByAuthor(author);
+      return ResponseEntity.ok(searchResult);
+    }
 }

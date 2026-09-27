@@ -24,4 +24,7 @@ public interface BookService {
 
     //soft delete
     boolean softDeletedBook(Long bookId);
+
+    //Search by Author
+    List<BookResDTO> searchByAuthor(String author);
 }

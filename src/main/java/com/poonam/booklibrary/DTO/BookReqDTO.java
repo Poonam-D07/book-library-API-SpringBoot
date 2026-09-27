@@ -1,6 +1,8 @@
 package com.poonam.booklibrary.DTO;
 
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 import lombok.*;
 
 @Getter
@@ -9,11 +11,15 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class BookReqDTO {
-//    private Long bookId;
+
+    @NotBlank(message = "Title is required")
     private String title;
+
+    @NotBlank(message = "Author is required")
     private String author;
+
+    @Positive(message = "Price must be greater than 0")
     private Double price;
-//    private Boolean isAvailable;
 }
 
 

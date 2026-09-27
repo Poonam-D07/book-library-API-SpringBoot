@@ -8,4 +8,7 @@ import java.util.List;
 public interface BookRepository extends JpaRepository<BookEntity, Long> {
 //NEW
     List<BookEntity> findByIsDeletedFalse();
+
+    //search author
+    List<BookEntity> findByAuthor(String author);
 }

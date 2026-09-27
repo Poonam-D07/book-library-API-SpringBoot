@@ -7,6 +7,7 @@ import com.poonam.booklibrary.Repository.BookRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -131,5 +132,30 @@ public class BookServiceImpl implements BookService {
         oldEntity.setIsDeleted(true);
          bookRepository.save(oldEntity);
         return true;
+    }
+
+    //=========================
+   //Search book by author
+  //=========================
+    @Override
+    public List<BookResDTO> searchByAuthor(String author) {
+
+        List<BookEntity> bookList = bookRepository.findByAuthor(author);
+
+        List<BookResDTO> dtoList = new ArrayList<>();
+
+        for(BookEntity book : bookList){
+            BookResDTO bookResDTO = BookResDTO.builder()
+                    .bookId(book.getBookId())
+                    .title(book.getTitle())
+                    .author(book.getAuthor())
+                    .price(book.getPrice())
+                    .isAvailable(book.getIsAvailable())
+                    .build();
+
+            dtoList.add(bookResDTO);
+
+        }
+                return dtoList;
     }
 }
